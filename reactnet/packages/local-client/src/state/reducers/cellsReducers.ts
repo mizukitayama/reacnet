@@ -27,6 +27,30 @@ const randomId = () => {
 const cellsReducer = produce(
   (state: CellsState = initialState, action: Action) => {
     switch (action.type) {
+      case ActionType.SAVE_CELLS_ERROR:
+        state.error = action.payload;
+        return state;
+
+      case ActionType.FETCH_CELLS:
+        state.loading = true;
+        state.error = null;
+        return state;
+
+      case ActionType.FETCH_CELLS_COMPLETE:
+        // render by order
+        state.order = action.payload.map((cell) => cell.id);
+        // add up data
+        state.data = action.payload.reduce((acc, cell) => {
+          acc[cell.id] = cell;
+          return acc;
+        }, {} as CellsState["data"]);
+        return state;
+
+      case ActionType.FETCH_CELLS_ERROR:
+        state.loading = false;
+        state.error = action.payload;
+        return state;
+
       case ActionType.UPDATE_CELL:
         const { id, content } = action.payload;
 
@@ -64,7 +88,8 @@ const cellsReducer = produce(
         const foundIndex = state.order.findIndex(
           (id) => id === action.payload.id
         );
-        if (foundIndex < 0) { //index not found
+        if (foundIndex < 0) {
+          //index not found
           //insert at the top of cells
           state.order.unshift(cell.id);
         } else {
