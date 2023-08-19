@@ -16,6 +16,8 @@ exports.serveCommand = void 0;
 const commander_1 = require("commander");
 const local_api_1 = require("local-api");
 const path_1 = __importDefault(require("path"));
+// use proxy because it enables to develop react app on local machine
+const isProduction = process.env.NODE_ENV === 'production';
 exports.serveCommand = new commander_1.Command()
     .command("serve [filename]")
     .description("open a file for editing")
@@ -25,9 +27,9 @@ exports.serveCommand = new commander_1.Command()
         return typeof err.code === "string";
     };
     try {
-        const dir = path_1.default.join(process.cwd(), path_1.default.dirname(filename));
-        yield (0, local_api_1.serve)(parseInt(options.port), path_1.default.basename(filename), dir);
-        console.log(`Opened ${filename}. Navigate to http://localhost: ${options.port}`);
+        const dir = path_1.default.join(process.cwd(), path_1.default.dirname(filename)); //whole absolute path to the file
+        yield (0, local_api_1.serve)(parseInt(options.port), path_1.default.basename(filename), dir, !isProduction);
+        console.log(`Opened ${filename}. Navigate to http://localhost:${options.port} to edit file`);
     }
     catch (err) {
         if (isLocalApiError(err)) {

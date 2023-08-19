@@ -6,6 +6,9 @@ interface LocalApiError {
   code: string;
 }
 
+// use proxy because it enables to develop react app on local machine
+const isProduction = process.env.NODE_ENV === 'production'
+
 export const serveCommand = new Command()
   .command("serve [filename]")
   .description("open a file for editing")
@@ -15,9 +18,9 @@ export const serveCommand = new Command()
 			return typeof err.code === "string";
 		}
     try {
-      const dir = path.join(process.cwd(), path.dirname(filename));
-      await serve(parseInt(options.port), path.basename(filename), dir);
-			console.log(`Opened ${filename}. Navigate to http://localhost: ${options.port}`)
+      const dir = path.join(process.cwd(), path.dirname(filename)); //whole absolute path to the file
+      await serve(parseInt(options.port), path.basename(filename), dir, !isProduction);
+			console.log(`Opened ${filename}. Navigate to http://localhost:${options.port} to edit file`)
     } catch (err) {
 			if (isLocalApiError(err)){
 				if (err.code === 'EADDRINUSE') {

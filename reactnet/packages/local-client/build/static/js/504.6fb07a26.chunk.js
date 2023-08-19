@@ -1,0 +1,2 @@
+(this["webpackJsonplocal-client"]=this["webpackJsonplocal-client"]||[]).push([[504],{654:function(a,e){!function(a){function e(e,n){a.languages[e]&&a.languages.insertBefore(e,"comment",{"doc-comment":n})}var n=a.languages.markup.tag,t={pattern:/\/\/\/.*/,greedy:!0,alias:"comment",inside:{tag:n}},s={pattern:/'''.*/,greedy:!0,alias:"comment",inside:{tag:n}};e("csharp",t),e("fsharp",t),e("vbnet",s)}(Prism)}}]);
+//# sourceMappingURL=504.6fb07a26.chunk.js.map

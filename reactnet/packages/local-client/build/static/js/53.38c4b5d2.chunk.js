@@ -1,0 +1,2 @@
+(this["webpackJsonplocal-client"]=this["webpackJsonplocal-client"]||[]).push([[53],{203:function(e,a){Prism.languages.brainfuck={pointer:{pattern:/<|>/,alias:"keyword"},increment:{pattern:/\+/,alias:"inserted"},decrement:{pattern:/-/,alias:"deleted"},branching:{pattern:/\[|\]/,alias:"important"},operator:/[.,]/,comment:/\S+/}}}]);
+//# sourceMappingURL=53.38c4b5d2.chunk.js.map
