@@ -10,7 +10,7 @@ const CellList: React.FC = () => {
     order ? order.map((id) => data[id]) : []
   );
 
-  const { fetchCells, saveCells } = useActions()
+  const { fetchCells } = useActions()
 
   useEffect(() => {
     fetchCells()

@@ -11,10 +11,9 @@ import { useCumulativeCode } from "../hooks/use-cumulative-code";
 
 interface CodeCellProps {
   cell: Cell;
-  initialValue: string;
 }
 
-const CodeCell: React.FC<CodeCellProps> = ({ cell, initialValue }) => {
+const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const { updateCell, createBundle } = useActions();
   const bundle = useTypedSelector((state) => state.bundles?.[cell.id]);
   // take all the code of previous cells
@@ -48,7 +47,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell, initialValue }) => {
       >
         <Resizable direction="horizontal">
           <CodeEditor
-            initialValue={initialValue}
+            initialValue={cell.content}
             onChange={(value) => updateCell(cell.id, value)}
           />
         </Resizable>

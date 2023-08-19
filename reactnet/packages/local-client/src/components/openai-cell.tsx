@@ -4,14 +4,15 @@ import { Cell } from "../state";
 import "./code-cell.css";
 import CodeCell from "./code-cell";
 import "./openai-cell.css";
+import { useActions } from "../hooks/use-actions";
 
 interface CodeCellProps {
   cell: Cell;
 }
 
 const AICodeCell: React.FC<CodeCellProps> = ({ cell }) => {
+  const { updateCell } = useActions()
   const [question, setQuestion] = useState("");
-  const [initialValue, setInitialValue] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -36,7 +37,7 @@ const AICodeCell: React.FC<CodeCellProps> = ({ cell }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey}`,
+            Authorization: `Bearer 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`,
           },
         }
       )
@@ -51,8 +52,7 @@ const AICodeCell: React.FC<CodeCellProps> = ({ cell }) => {
           codeResult +
           "\nshow(<App />)\n";
         setIsLoading(false);
-        setInitialValue(combinedCode);
-
+        updateCell(cell.id, combinedCode)
       })
       .catch((error) => {
         console.error("An error occurred:", error.response.data);
@@ -90,8 +90,8 @@ const AICodeCell: React.FC<CodeCellProps> = ({ cell }) => {
               Loading
             </progress>
         </div>
-      ) : initialValue ? (
-        <CodeCell cell={cell} initialValue={initialValue} />
+      ) : cell.content ? (
+        <CodeCell cell={cell} />
       ) : (
         <div className="input-wrapper">
           <div className="form__group field">

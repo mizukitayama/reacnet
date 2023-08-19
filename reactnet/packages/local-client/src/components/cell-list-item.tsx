@@ -17,7 +17,7 @@ const CellListItem: React.FC<CellListItemProps> = ({ cell }) => {
         <div className="action-bar-wrapper">
           <ActionBar id={cell.id} />
         </div>
-        <CodeCell cell={cell} initialValue="show()" />
+        <CodeCell cell={cell} />
       </>
     );
   } else if (cell.type === "ai") {
