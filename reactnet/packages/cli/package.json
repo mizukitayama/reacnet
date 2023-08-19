@@ -1,19 +1,29 @@
 {
-  "name": "cli",
+  "name": "reactnet",
   "version": "1.0.0",
   "description": "",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "bin": "dist/index.js",
   "scripts": {
-    "start": "tsc --watch --preserveWatchOutput"
+    "start": "tsc --watch --preserveWatchOutput",
+    "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^11.0.0",
-    "local-api": "^1.0.0"
+    "@reactnet/local-client": "^1.0.0"
   },
   "devDependencies": {
+    "@reactnet/local-api": "^1.0.0",
+    "commander": "^11.0.0",
     "@types/node": "^20.5.1",
+    "esbuild": "0.8.21",
     "typescript": "^5.1.6"
   }
 }

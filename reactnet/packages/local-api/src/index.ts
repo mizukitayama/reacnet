@@ -21,7 +21,7 @@ export const serve = (
     }))
   } else {
 		// use static index.html, when serving up built files from build dir
-    const packagePath = require.resolve("local-client/build/index.html");
+    const packagePath = require.resolve("@reactnet/local-client/build/index.html");
     app.use(express.static(path.dirname(packagePath)));
   }
 

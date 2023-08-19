@@ -1,11 +1,14 @@
 {
-  "name": "local-api",
+  "name": "@reactnet/local-api",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "files": ["dist"],
+  "publishConfig": {"access": "public"},
   "types": "dist/index.d.ts",
   "scripts": {
-    "start": "tsc --watch --preserveWatchOutput"
+    "start": "tsc --watch --preserveWatchOutput",
+    "prepublishOnly": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +22,6 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6",
-    "local-client": "^0.1.0"
+    "@reactnet/local-client": "^0.1.0"
   }
 }
