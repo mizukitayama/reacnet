@@ -11,14 +11,20 @@ interface CodeCellProps {
 }
 
 const AICodeCell: React.FC<CodeCellProps> = ({ cell }) => {
-  const { updateCell } = useActions()
+  const { updateCell } = useActions();
   const [question, setQuestion] = useState("");
+  const [apiKey, setApiKey] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const apiKey = process.env.REACT_APP_API_KEY;
-
+  const [apiSetError, setApiSetError] = useState(false);
+  const [apiSetSuccess, setApiSetSuccess] = useState(false);
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setApiSetSuccess(false);
+    const chatGptApi = localStorage.getItem("chatGptApi");
+    if (!chatGptApi) {
+      throw new Error();
+    }
     await axios
       .post(
         "https://api.openai.com/v1/chat/completions",
@@ -30,14 +36,14 @@ const AICodeCell: React.FC<CodeCellProps> = ({ cell }) => {
               content:
                 "Write a code in React: " +
                 question +
-                "\nI don't need no import statement. If your code contains export statement or export default statement, then delete them. I will only need a function called App().",
+                "\nIf your code contains export statement or export default statement, then delete them. I will only need a function called App().",
             },
           ],
         },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer ${chatGptApi}`,
           },
         }
       )
@@ -48,27 +54,15 @@ const AICodeCell: React.FC<CodeCellProps> = ({ cell }) => {
           setIsLoading(false);
           return null;
         }
-        const combinedCode =
-          codeResult +
-          "\nshow(<App />)\n";
+        const combinedCode = codeResult + "\nshow(<App />)\n";
         setIsLoading(false);
-        updateCell(cell.id, combinedCode)
+        updateCell(cell.id, combinedCode);
       })
       .catch((error) => {
         console.error("An error occurred:", error.response.data);
         setIsLoading(false);
+        localStorage.removeItem('chatGptApi')
       });
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuestion(e.target.value);
-  };
-
-  const handleKeyPress = (e: KeyboardEvent) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSubmit(e as unknown as FormEvent);
-    }
   };
 
   const trimCode = (response: string) => {
@@ -82,21 +76,102 @@ const AICodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     return cleanedString;
   };
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setQuestion(e.target.value);
+  };
+
+  const handleKeyPress = (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit(e as unknown as FormEvent);
+    }
+  };
+
+  const registerApiKey = async (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      setIsLoading(true);
+      await axios
+        .post(
+          "https://api.openai.com/v1/chat/completions",
+          {
+            model: "gpt-3.5-turbo",
+            messages: [
+              {
+                role: "user",
+                content: "",
+              },
+            ],
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${apiKey}`,
+            },
+          }
+        )
+        .then((response) => {
+          localStorage.setItem("chatGptApi", apiKey);
+          setIsLoading(false);
+          setApiSetError(false);
+          setApiSetSuccess(true);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          setApiSetError(true);
+          setApiSetSuccess(false);
+        });
+    }
+  };
+
+  const deleteApiKey = () => {
+    setIsLoading(true)
+    localStorage.removeItem('chatGptApi')
+    setIsLoading(false)
+  }
+
   return (
     <div>
       {isLoading ? (
         <div className="progress-wrapper">
-            <progress className="progress is-small is-primary" max="100">
-              Loading
-            </progress>
+          <progress className="progress is-small is-primary" max="100">
+            Loading
+          </progress>
         </div>
       ) : cell.content ? (
         <CodeCell cell={cell} />
+      ) : !localStorage.getItem("chatGptApi") ? (
+        <>
+          <div className="input-wrapper">
+            <div className="form__group field">
+              <input
+                placeholder="ask something"
+                className="form__field"
+                type="text"
+                onChange={(e) => {
+                  setApiKey(e.target.value);
+                }}
+                value={apiKey}
+                onKeyPress={registerApiKey}
+              />
+              <label className="form__label">OpenAI API key</label>
+            </div>
+            {apiSetError ? (
+              <div className="error-message">Confirm the openAI API key.</div>
+            ) : (
+              <></>
+            )}
+          </div>
+        </>
       ) : (
         <div className="input-wrapper">
+          {apiSetSuccess ? (
+            <div className="success-message">Registered API key.</div>
+          ) : (
+            <></>
+          )}
           <div className="form__group field">
             <input
-              placeholder="Name"
+              placeholder="ask something"
               className="form__field"
               type="text"
               onChange={handleChange}

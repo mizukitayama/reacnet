@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import { Provider } from "react-redux";
 import { store } from "./state";
 import CellList from "./components/cell-list";
+import ApiKeyRegister from "./components/api-key-register";
 import "./style.css"
 
 const App = () => {
@@ -12,9 +13,10 @@ const App = () => {
     <Provider store={store}>
       <div>
         <Helmet>
-          <title>MorphoseJS</title>
+          <title>reacnet</title>
         </Helmet>
         <div className="wrapper">
+          {/* <ApiKeyRegister /> */}
           <CellList />
         </div>
       </div>
