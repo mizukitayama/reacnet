@@ -26,7 +26,6 @@
 
 https://github.com/mizukitayama/reacnet/assets/104298092/3253e663-6c10-405f-98ab-f374e5b800fb
 
-
 2. 以下のコマンドで起動します。
    
    `npx reacnet serve [./path/filename]`
