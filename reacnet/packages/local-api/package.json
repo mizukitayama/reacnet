@@ -1,6 +1,6 @@
 {
   "name": "@reactnet/local-api",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "dist/index.js",
   "files": [
@@ -23,7 +23,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@reactnet/local-client": "^1.1.0",
+    "@reactnet/local-client": "^1.1.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6"

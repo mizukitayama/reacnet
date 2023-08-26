@@ -1,6 +1,6 @@
 {
   "name": "reacnet",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "publishConfig": {
     "access": "public"
@@ -17,10 +17,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@reactnet/local-client": "^1.1.0"
+    "@reactnet/local-client": "^1.1.1"
   },
   "devDependencies": {
-    "@reactnet/local-api": "^1.1.0",
+    "@reactnet/local-api": "^1.1.1",
     "@types/node": "^20.5.1",
     "commander": "^11.0.0",
     "esbuild": "0.8.21",
