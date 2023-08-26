@@ -44,6 +44,9 @@ const cellsReducer = produce(
           acc[cell.id] = cell;
           return acc;
         }, {} as CellsState["data"]);
+        if (!state) {
+          console.log('no cells')
+        }
         return state;
 
       case ActionType.FETCH_CELLS_ERROR:

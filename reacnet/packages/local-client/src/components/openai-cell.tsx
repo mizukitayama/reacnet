@@ -123,12 +123,6 @@ const AICodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     }
   };
 
-  const deleteApiKey = () => {
-    setIsLoading(true)
-    localStorage.removeItem('chatGptApi')
-    setIsLoading(false)
-  }
-
   return (
     <div>
       {isLoading ? (
@@ -165,7 +159,7 @@ const AICodeCell: React.FC<CodeCellProps> = ({ cell }) => {
       ) : (
         <div className="input-wrapper">
           {apiSetSuccess ? (
-            <div className="success-message">Registered API key.</div>
+            <div className="success-message">Registered API key!</div>
           ) : (
             <></>
           )}
