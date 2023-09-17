@@ -1,4 +1,3 @@
-日本語は英語の後に続きます
 # reacnet
 
 A seamless online JavaScript editor, specializing in creating React components with integrated AI support.
