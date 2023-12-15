@@ -2,8 +2,6 @@
 
 A seamless online JavaScript editor, specializing in creating React components with integrated AI support.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-
 
 ## Overview
 
@@ -100,9 +98,6 @@ You can add, delete, and move cells:
 # reacnet
 
 オンラインJavaScriptエディタ、Reactコンポーネントの作成を専門とするシームレスなインターフェースと統合されたAIサポート付き。
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-
 
 ## 概要
 
